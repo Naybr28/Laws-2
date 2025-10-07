@@ -3,12 +3,17 @@ import { useState } from "react";
 
 export default function HomeUI() {
   const navigate = useNavigate();
+  const [messages, setMessages] = useState([]); // simpan semua chat
   const [question, setQuestion] = useState("");
-  const [response, setResponse] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // 👉 fungsi untuk kirim ke n8n
   const handleSend = async () => {
-    if (!question.trim()) return; // kalau kosong jangan kirim
+    if (!question.trim()) return;
+
+    const newUserMsg = { from: "user", text: question };
+    setMessages((prev) => [...prev, newUserMsg]);
+    setQuestion("");
+    setLoading(true);
 
     try {
       const res = await fetch(
@@ -21,19 +26,19 @@ export default function HomeUI() {
       );
 
       const data = await res.json();
-      console.log("Balasan dari n8n:", data);
-      setResponse(data.answer); // simpan hasil dari n8n
+      const botMsg = { from: "bot", text: data.answer };
+      setMessages((prev) => [...prev, botMsg]);
     } catch (error) {
-      console.error("Terjadi error:", error);
-      setResponse("❌ Gagal terhubung ke n8n");
+      const botMsg = { from: "bot", text: "❌ Gagal terhubung ke n8n." };
+      setMessages((prev) => [...prev, botMsg]);
     }
 
-    setQuestion(""); // kosongkan input setelah kirim
+    setLoading(false);
   };
 
   return (
-    <div className="h-screen w-screen bg-gradient-to-b from-[#FFFFFF] to-[#EAF2FF] flex flex-col justify-center relative">
-      {/* Back Button (top-left) */}
+    <div className="h-screen w-screen bg-gradient-to-b from-[#FFFFFF] to-[#EAF2FF] flex flex-col justify-between relative">
+      {/* Back Button */}
       <div className="flex items-center p-6">
         <button3
           onClick={() => navigate(-1)}
@@ -44,52 +49,55 @@ export default function HomeUI() {
         </button3>
       </div>
 
-      {/* Profile Icon (top-right) */}
+      {/* Profile Icon */}
       <img
         src="/Info.png"
         alt="Info"
         className="absolute top-[24px] right-[58px] w-12 h-12 cursor-pointer hover:opacity-70"
       />
 
-      {/* Center Text */}
-      <div className="flex flex-col flex-1 items-center justify-center">
+      {/* Chat Area */}
+      <div className="flex flex-col items-center flex-1 overflow-y-auto px-8 pb-32 mt-8">
         <h2 className="text-3xl font-bold text-center text-sky-900 mb-10">
           您好！我可以幫您什麼忙呢？
         </h2>
 
-        {/* Tampilkan balasan dari n8n */}
-        {response && (
-          <p className="text-xl text-gray-800 mt-4">
-            💬 {response}
-          </p>
-        )}
+        <div className="w-full max-w-[900px] flex flex-col gap-4">
+          {messages.map((msg, i) => (
+            <div
+              key={i}
+              className={`flex ${
+                msg.from === "user" ? "justify-end" : "justify-start"
+              }`}
+            >
+              <div
+                className={`px-5 py-3 rounded-2xl shadow-md max-w-[70%] text-lg ${
+                  msg.from === "user"
+                    ? "bg-sky-600 text-white rounded-br-none"
+                    : "bg-gray-200 text-gray-800 rounded-bl-none"
+                }`}
+              >
+                {msg.text}
+              </div>
+            </div>
+          ))}
+
+          {loading && (
+            <p className="text-gray-500 text-center mt-4">⏳ 正在思考中...</p>
+          )}
+        </div>
       </div>
 
-      {/* Chat Input Bar */}
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-[70px] w-[1080px] h-16 bg-white shadow-[0px_2px_6px_0px_rgba(0,0,0,0.25)] rounded-xl flex items-center px-6">
-        {/* Left Icon (Menu) */}
-        <div className="mr-4 cursor-pointer hover:opacity-70">
-          <div className="w-6 h-6 bg-sky-900 rounded-sm" />
-        </div>
-
-        {/* Input Field */}
+      {/* Input Bar */}
+      <div className="absolute left-1/2 -translate-x-1/2 bottom-[50px] w-[1080px] h-16 bg-white shadow-[0px_2px_6px_0px_rgba(0,0,0,0.25)] rounded-xl flex items-center px-6">
         <input
           type="text"
           placeholder="輸入您的法律問題"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSend()}
           className="flex-1 text-gray-700 text-lg outline-none"
-          onKeyDown={(e) => e.key === "Enter" && handleSend()} // tekan Enter juga bisa kirim
         />
-
-        {/* Microphone Icon */}
-        <img
-          src="/Mic.png"
-          alt="Mic"
-          className="w-8 h-8 mx-4 cursor-pointer hover:opacity-70"
-        />
-
-        {/* Send Button */}
         <img
           src="/Send24.png"
           alt="Send"
