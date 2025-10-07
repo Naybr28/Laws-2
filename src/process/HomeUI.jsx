@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function HomeUI() {
   const navigate = useNavigate();
-  const [messages, setMessages] = useState([]); // simpan semua chat
+  const [messages, setMessages] = useState([]);
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -16,17 +16,15 @@ export default function HomeUI() {
     setLoading(true);
 
     try {
-      const res = await fetch(
-        "http://localhost:5678/webhook/law-bot",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question }),
-        }
-      );
+      const res = await fetch("http://localhost:5678/webhook-test/law-bot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question }),
+      });
 
+      if (!res.ok) throw new Error("Network error");
       const data = await res.json();
-      const botMsg = { from: "bot", text: data.answer };
+      const botMsg = { from: "bot", text: data.answer || "❌ Tidak ada respon dari n8n." };
       setMessages((prev) => [...prev, botMsg]);
     } catch (error) {
       const botMsg = { from: "bot", text: "❌ Gagal terhubung ke n8n." };
@@ -40,13 +38,13 @@ export default function HomeUI() {
     <div className="h-screen w-screen bg-gradient-to-b from-[#FFFFFF] to-[#EAF2FF] flex flex-col justify-between relative">
       {/* Back Button */}
       <div className="flex items-center p-6">
-        <button3
+        <button
           onClick={() => navigate(-1)}
           className="flex items-center text-black hover:text-gray-400"
         >
           <span className="text-xl font-extrabold mr-2 mb-1">←</span>
           <span className="text-xl font-bold">回上一頁</span>
-        </button3>
+        </button>
       </div>
 
       {/* Profile Icon */}
@@ -108,4 +106,3 @@ export default function HomeUI() {
     </div>
   );
 }
-
