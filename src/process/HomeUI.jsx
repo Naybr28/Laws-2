@@ -17,7 +17,7 @@ export default function HomeUI() {
 
     try {
       const res = await fetch(
-        "http://localhost:5678/webhook/2fa3c9fe-d8b3-4520-97a3-9bc619695cec",
+        "http://localhost:5678/webhook/law-bot",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -108,3 +108,4 @@ export default function HomeUI() {
     </div>
   );
 }
+
