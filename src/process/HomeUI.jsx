@@ -38,13 +38,13 @@ export default function HomeUI() {
     <div className="h-screen w-screen bg-gradient-to-b from-[#FFFFFF] to-[#EAF2FF] flex flex-col justify-between relative">
       {/* Back Button */}
       <div className="flex items-center p-6">
-        <button
+        <button3
           onClick={() => navigate(-1)}
           className="flex items-center text-black hover:text-gray-400"
         >
           <span className="text-xl font-extrabold mr-2 mb-1">←</span>
           <span className="text-xl font-bold">回上一頁</span>
-        </button>
+        </button3>
       </div>
 
       {/* Profile Icon */}
@@ -87,7 +87,7 @@ export default function HomeUI() {
       </div>
 
       {/* Input Bar */}
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-[50px] w-[1080px] h-16 bg-white shadow-[0px_2px_6px_0px_rgba(0,0,0,0.25)] rounded-xl flex items-center px-6">
+      <div className="absolute left-1/2 -translate-x-1/2 bottom-[50px] w-[1080px] h-16 bg-white rounded-xl flex items-center px-6">
         <input
           type="text"
           placeholder="輸入您的法律問題"
@@ -106,3 +106,4 @@ export default function HomeUI() {
     </div>
   );
 }
+
