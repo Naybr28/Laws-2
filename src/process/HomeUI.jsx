@@ -16,7 +16,7 @@ export default function HomeUI() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5678/webhook-test/law-bot", {
+      const res = await fetch("http://localhost:5678/webhook-test/testwebhook", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question }),
@@ -106,4 +106,5 @@ export default function HomeUI() {
     </div>
   );
 }
+
 
