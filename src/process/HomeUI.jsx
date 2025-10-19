@@ -12,7 +12,7 @@ export default function HomeUI() {
     JSON.parse(localStorage.getItem("user")) || {}
   );
 
-  // 🧩 Run signup only if "signupInfo" exists (user came from signup)
+  //Run signup only if "signupInfo" exists (user came from signup)
   useEffect(() => {
     const doSignup = async () => {
       const signupInfo = JSON.parse(localStorage.getItem("signupInfo"));
@@ -21,7 +21,7 @@ export default function HomeUI() {
         return;
       }
 
-      console.log("🚀 Sending signup to n8n:", {
+      console.log("Sending signup to n8n:", {
         email: signupInfo.email,
         password: signupInfo.password,
         action: "signup",
@@ -32,7 +32,7 @@ export default function HomeUI() {
       });
 
       try {
-        // ✅ Correct webhook path (not /webhook-test/)
+        //Correct webhook path (not /webhook-test/)
         const res = await fetch("http://localhost:5678/webhook/user-login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -49,7 +49,7 @@ export default function HomeUI() {
 
         if (!res.ok) throw new Error("Network error during signup");
         const data = await res.json();
-        console.log("✅ Signup success:", data);
+        console.log("Signup success:", data);
 
         // Save full user info
         const newUser = {
@@ -63,7 +63,7 @@ export default function HomeUI() {
         localStorage.removeItem("signupInfo");
         setUserInfo(newUser);
       } catch (err) {
-        console.error("❌ Signup failed:", err);
+        console.error("Signup failed:", err);
       }
     };
 
@@ -72,7 +72,7 @@ export default function HomeUI() {
     return () => clearTimeout(timer);
   }, [mainRole, subRole, subSubRole, subSubSubRole]);
 
-  // 💬 Handle chat messages
+  //Handle chat messages
   const handleSendMessage = async (message) => {
     setMessages((prev) => [...prev, { from: "user", text: message }]);
 
@@ -93,15 +93,15 @@ export default function HomeUI() {
       const data = await res.json();
       setMessages((prev) => [...prev, { from: "bot", text: data.answer }]);
     } catch (err) {
-      console.error("⚠️ Chat request failed:", err);
+      console.error("Chat request failed:", err);
       setMessages((prev) => [
         ...prev,
-        { from: "bot", text: "⚠️ 無法連接至伺服器，請稍後再試。" },
+        { from: "bot", text: "無法連接至伺服器，請稍後再試。" },
       ]);
     }
   };
 
-  // 🧠 Store user info if missing
+  //Store user info if missing
   useEffect(() => {
     if (mainRole && !localStorage.getItem("user")) {
       const newUser = { mainRole, subRole, subSubRole, subSubSubRole };
