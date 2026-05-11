@@ -5,7 +5,7 @@ import Home from "/src/pages/Home.jsx";
 import Login from "/src/pages/Auth/login.jsx";
 import Signup from "/src/pages/Auth/signup.jsx";
 import HomeUI from "/src/pages/Chat/HomeUI.jsx";
-import SignupSuccess from "/src/pages/Auth/SignupSuccess.jsx";
+import SignupSuccess from "/src/pages/Auth/Signupsuccess.jsx";
 
 
 // Components
