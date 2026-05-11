@@ -1,0 +1,812 @@
+@import "tailwindcss";
+
+/* ============================================================
+   校園法律顧問 Global CSS + Design System
+   Merged from:
+   1. Original index.css
+   2. Claude redesigned theme.css
+   ============================================================ */
+
+/* Optional Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=Noto+Sans+TC:wght@300;400;500;600&display=swap");
+
+/* =========================
+   Root Design Variables
+   ========================= */
+:root {
+  /* Core Palette */
+  --navy: #1A2E4A;
+  --navy-mid: #2C4A6E;
+  --navy-light: #E8EFF7;
+
+  --amber: #D4891A;
+  --amber-mid: #F5A623;
+  --amber-light: #FEF3E2;
+
+  --surface: #F6F8FB;
+  --surface-deep: #EBF1FA;
+
+  /* Text */
+  --text-primary: #1A2E4A;
+  --text-secondary: #4A6080;
+  --text-muted: #8A9BB0;
+
+  /* Borders */
+  --border: rgba(26, 46, 74, 0.12);
+  --border-strong: rgba(26, 46, 74, 0.22);
+
+  /* Typography */
+  --font-serif: "Noto Serif TC", serif;
+  --font-sans: "Noto Sans TC", system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  /* Radius */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: var(--text-primary);
+  background-color: var(--surface);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================
+   Full-screen Fix
+   Important for React / Vite
+   ========================= */
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 320px;
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--surface);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* =========================
+   Basic Elements
+   ========================= */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1 {
+  line-height: 1.1;
+}
+
+/* IMPORTANT:
+   Keep global button style very light.
+   Do not force padding too much because many custom buttons already define their own size.
+*/
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button:focus,
+button:focus-visible {
+  outline: none;
+}
+
+/* ============================================================
+   Claude / New Design System Classes
+   ============================================================ */
+
+/* Auth card container */
+.auth-card {
+  background: #fff;
+  border: 0.5px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 24px rgba(26, 46, 74, 0.07);
+}
+
+/* Logo mark icon box */
+.logo-mark {
+  width: 44px;
+  height: 44px;
+  background: var(--navy);
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  font-size: 22px;
+}
+
+/* Form inputs */
+.cl-input {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  padding: 9px 13px;
+  border-radius: var(--r-md);
+  border: 0.5px solid var(--border-strong);
+  color: var(--text-primary);
+  background: var(--surface);
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.cl-input:focus {
+  border-color: var(--navy);
+  background: #fff;
+}
+
+.cl-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Primary submit button */
+.cl-btn-primary {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 11px;
+  border-radius: var(--r-md);
+  border: none;
+  background: var(--navy);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 4px;
+}
+
+.cl-btn-primary:hover {
+  background: var(--navy-mid);
+}
+
+.cl-btn-primary:disabled {
+  background: #9BA8B5;
+  cursor: not-allowed;
+}
+
+/* Role select button */
+.cl-role-btn {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  padding: 9px 13px;
+  border-radius: var(--r-md);
+  border: 0.5px dashed var(--border-strong);
+  color: var(--text-secondary);
+  background: var(--surface);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+}
+
+.cl-role-btn:hover {
+  border-color: var(--navy);
+}
+
+.cl-role-btn.selected {
+  border-style: solid;
+  border-color: var(--navy);
+  background: var(--navy-light);
+  color: var(--navy);
+  font-weight: 500;
+}
+
+/* Feature card for HomeUI welcome */
+.feature-card {
+  background: #fff;
+  border: 0.5px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(26, 46, 74, 0.08);
+  border-color: rgba(26, 46, 74, 0.22);
+}
+
+.feature-card.fc-blue::before {
+  background: var(--navy);
+}
+
+.feature-card.fc-amber::before {
+  background: var(--amber);
+}
+
+.feature-card.fc-teal::before {
+  background: #1A7A5A;
+}
+
+.feature-card.fc-red::before {
+  background: #C0392B;
+}
+
+/* Quick question chips */
+.q-chip {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  padding: 6px 13px;
+  border-radius: 20px;
+  border: 0.5px solid var(--border-strong);
+  background: #fff;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.q-chip:hover {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+
+/* Profile dropdown menu item */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.12s;
+}
+
+.menu-item:hover {
+  background: var(--navy-light);
+  color: var(--navy);
+}
+
+.menu-item.danger {
+  color: #B03030;
+}
+
+.menu-item.danger:hover {
+  background: #FEF0F0;
+}
+
+/* Role chip tags in profile */
+.role-tag {
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 20px;
+  background: var(--navy-light);
+  color: var(--navy);
+  font-weight: 500;
+  border: 0.5px solid rgba(26, 46, 74, 0.15);
+  display: inline-block;
+}
+
+/* History sidebar item */
+.history-item {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: background 0.12s;
+  margin-bottom: 2px;
+}
+
+.history-item:hover {
+  background: var(--navy-light);
+}
+
+.history-item.active {
+  background: var(--navy-light);
+}
+
+/* Top nav link buttons */
+.nav-link {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-secondary);
+  padding: 5px 10px;
+  border-radius: var(--r-sm);
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.nav-link:hover {
+  background: var(--navy-light);
+  color: var(--navy);
+}
+
+.nav-link.nav-highlight {
+  color: var(--amber);
+  font-weight: 500;
+}
+
+.nav-link.nav-highlight:hover {
+  background: var(--amber-light);
+}
+
+/* ============================================================
+   Original Project Classes
+   Keep these because your old components may still use them
+   ============================================================ */
+
+.chip-btn {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2px 6px;
+  font-size: 10px;
+  background: #f1f1f3;
+  border: 1px solid #d5d5d8;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.chip-btn:hover {
+  background: #e5e5e8;
+}
+
+.chip-icon-btn {
+  all: unset;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 10px;
+  color: #3b82f6;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 9999px;
+
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.chip-icon-btn:hover {
+  background: #e0f2fe;
+}
+
+.third-view-btn {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  padding: 2px 8px;
+  font-size: 11px;
+  border-radius: 9999px;
+  border: 1px solid #d1d1d1;
+  background-color: #f5f5f5;
+
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.third-view-btn:hover {
+  background-color: #ededed;
+  border-color: #c6c6c6;
+}
+
+.third-view-btn:focus,
+.third-view-btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Popup scrollbar */
+.qa-popup::-webkit-scrollbar {
+  width: 6px;
+}
+
+.qa-popup::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+/* Chat markdown spacing */
+.chat-markdown p {
+  margin: 0;
+}
+
+.chat-markdown p + p {
+  margin-top: 0.6em;
+}
+
+.chat-markdown ul,
+.chat-markdown ol {
+  margin: 0.4em 0 0.4em 1.2em;
+  padding: 0;
+}
+
+.chat-markdown li {
+  margin: 0.2em 0;
+}
+
+.chat-markdown strong {
+  font-weight: 700;
+}
+
+.chat-markdown code {
+  font-size: 0.9em;
+  background: rgba(26, 46, 74, 0.08);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.role-option-card:hover {
+  background: #DCEEFF !important;
+  border-color: rgba(26, 46, 74, 0.25) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(26, 46, 74, 0.08);
+}
+
+.role-option-card:active {
+  transform: scale(0.99);
+}
+
+/* ============================================================
+   index.css ADDITIONS — append these to the end of your
+   existing index.css file.
+   Covers: skeleton shimmer, updated tokens, scroll-to-bottom,
+   mobile nav, page transition, and toast layout utilities.
+   ============================================================ */
+
+/* =========================
+   Extended Design Tokens
+   ========================= */
+:root {
+  /* Semantic colors — formalize these */
+  --success:        #2BB673;
+  --success-light:  #EEF8F1;
+  --success-border: rgba(36,122,61,0.22);
+
+  --danger:         #C0392B;
+  --danger-light:   #FEF0F0;
+  --danger-border:  rgba(176,48,48,0.22);
+
+  --warning:        #D4891A;
+  --warning-light:  #FEF8ED;
+  --warning-border: rgba(212,137,26,0.22);
+
+  --info:           #378ADD;
+  --info-light:     #EAF3FB;
+  --info-border:    rgba(26,95,165,0.2);
+
+  /* 4px spacing grid */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Typography scale */
+  --text-xs:   11px;
+  --text-sm:   13px;
+  --text-base: 14px;
+  --text-md:   16px;
+  --text-lg:   18px;
+  --text-xl:   22px;
+  --text-2xl:  28px;
+}
+
+/* =========================
+   Skeleton shimmer
+   ========================= */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
+.skeleton {
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    rgba(26, 46, 74, 0.06) 25%,
+    rgba(26, 46, 74, 0.12) 50%,
+    rgba(26, 46, 74, 0.06) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Pre-built skeleton sizes */
+.skeleton-text {
+  height: 14px;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.skeleton-text.w-3\/4 { width: 75%; }
+.skeleton-text.w-1\/2 { width: 50%; }
+.skeleton-text.w-1\/3 { width: 33%; }
+
+.skeleton-bubble {
+  height: 52px;
+  border-radius: 14px;
+}
+
+.skeleton-bubble.user {
+  width: 60%;
+  align-self: flex-end;
+}
+
+.skeleton-bubble.ai {
+  width: 80%;
+  align-self: flex-start;
+}
+
+.skeleton-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Chat skeleton group */
+.skeleton-chat-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+/* =========================
+   Page transition
+   ========================= */
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-enter {
+  animation: pageFadeIn 0.24s ease forwards;
+}
+
+/* =========================
+   Scroll-to-bottom button
+   ========================= */
+.scroll-bottom-btn {
+  position: fixed;
+  bottom: 130px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #1A2E4A;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  box-shadow: 0 4px 14px rgba(26, 46, 74, 0.25);
+  z-index: 30;
+  transition: transform 0.15s, opacity 0.15s;
+}
+
+.scroll-bottom-btn:hover {
+  transform: translateY(-2px);
+}
+
+.scroll-bottom-btn.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px);
+}
+
+/* =========================
+   Mobile bottom nav
+   ========================= */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #fff;
+  border-top: 0.5px solid rgba(26, 46, 74, 0.12);
+  z-index: 60;
+  padding: 0 8px;
+  padding-bottom: env(safe-area-inset-bottom);
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .mobile-nav {
+    display: flex;
+  }
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #8A9BB0;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  border-radius: 10px;
+  transition: color 0.12s, background 0.12s;
+  min-width: 52px;
+}
+
+.mobile-nav-item:hover,
+.mobile-nav-item.active {
+  color: #1A2E4A;
+  background: #E8EFF7;
+}
+
+.mobile-nav-item .nav-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Push main content above mobile nav */
+@media (max-width: 640px) {
+  .has-mobile-nav {
+    padding-bottom: 72px;
+  }
+}
+
+/* =========================
+   Copy button on chat bubble
+   ========================= */
+.bubble-copy-btn {
+  all: unset;
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  font-size: 12px;
+  color: #8A9BB0;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.12s, color 0.12s;
+  background: rgba(255,255,255,0.7);
+}
+
+.chat-bubble-wrap:hover .bubble-copy-btn {
+  opacity: 1;
+}
+
+.bubble-copy-btn:hover {
+  background: #E8EFF7;
+  color: #1A2E4A;
+}
+
+/* =========================
+   Chat sidebar
+   ========================= */
+@keyframes sidebarSlideIn {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+.chat-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  background: #fff;
+  border-right: 0.5px solid rgba(26, 46, 74, 0.12);
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 24px rgba(26, 46, 74, 0.08);
+  animation: sidebarSlideIn 0.24s ease forwards;
+}
+
+.chat-sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 46, 74, 0.3);
+  z-index: 79;
+  backdrop-filter: blur(2px);
+  animation: overlayIn 0.18s ease forwards;
+}
+
+/* =========================
+   Updated role-option-card hover
+   (supplement your existing button styles)
+   ========================= */
+.role-option-card:hover {
+  background: #dce8f5 !important;
+  border-color: rgba(26, 46, 74, 0.35) !important;
+  transform: translateY(-1px);
+}
+
+.role-option-card:active {
+  transform: scale(0.99);
+}
+
+/* =========================
+   Input bar — stronger presence
+   ========================= */
+.input-bar-container:focus-within {
+  border-color: rgba(26, 46, 74, 0.45) !important;
+  box-shadow: 0 4px 16px rgba(26, 46, 74, 0.12) !important;
+}
+
+/* =========================
+   Nav button nowrap fix
+   (prevents "登入" splitting across lines)
+   ========================= */
+nav button,
+nav a button {
+  white-space: nowrap;
+}
+
+/* =========================
+   Trust row fix
+   (replaces □ placeholder icons)
+   ========================= */
+.trust-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--amber);
+  flex-shrink: 0;
+  vertical-align: middle;
+  margin-right: 5px;
+}
