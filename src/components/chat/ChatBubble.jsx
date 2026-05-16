@@ -71,6 +71,34 @@ function AIAvatar() {
   );
 }
 
+function MarkdownText({ children }) {
+  return (
+    <div className="chat-markdown whitespace-pre-wrap">
+      <ReactMarkdown
+        components={{
+          p: ({ children }) => (
+            <p className="mb-2 leading-6">{children}</p>
+          ),
+          strong: ({ children }) => (
+            <strong className="font-semibold">{children}</strong>
+          ),
+          ul: ({ children }) => (
+            <ul className="list-disc pl-5 mb-1 space-y-0.5">{children}</ul>
+          ),
+          ol: ({ children }) => (
+            <ol className="list-decimal pl-5 mb-1 space-y-0.5">{children}</ol>
+          ),
+          li: ({ children }) => (
+            <li className="leading-7">{children}</li>
+          ),
+        }}
+      >
+        {children}
+      </ReactMarkdown>
+    </div>
+  );
+}
+
 export default function ChatBubble({ from, text }) {
   const isUser = from === "user";
   const [openSections, setOpenSections] = useState({});
@@ -119,9 +147,7 @@ export default function ChatBubble({ from, text }) {
       >
         {/* User message OR normal AI message without sections */}
         {isUser || sections.length === 0 ? (
-          <div className="chat-markdown">
-            <ReactMarkdown>{formattedText}</ReactMarkdown>
-          </div>
+          <MarkdownText>{formattedText}</MarkdownText>
         ) : (
           // Structured AI answer with section blocks
           <div className="space-y-2">
@@ -157,9 +183,9 @@ export default function ChatBubble({ from, text }) {
                       fontSize: 12,
                     }}
                   >
-                    <ReactMarkdown>
+                    <MarkdownText>
                       {isOpen ? section.content : section.preview}
-                    </ReactMarkdown>
+                    </MarkdownText>
                   </div>
 
                   {section.content.length > 100 && (
